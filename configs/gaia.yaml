@@ -1,0 +1,29 @@
+# GAIA Benchmark Configuration
+# General AI Assistants - Real-world tasks with tool use
+
+benchmark: gaia
+
+agent:
+  provider: openai
+  model_name: gpt-4o
+  api_key: ${OPENAI_API_KEY}
+  temperature: 0.0
+  max_tokens: 4096
+
+benchmark_config:
+  # Dataset configuration
+  split: validation  # validation or test
+  subset: "2023_level1"  # 2023_all, 2023_level1, 2023_level2, 2023_level3
+
+  # Execution limits
+  max_turns: 50
+  timeout: 300  # seconds per task
+
+  # Tool configuration
+  enable_web_browser: true
+  enable_python: true
+  enable_bash: true
+  sandbox_mode: local  # docker or local
+
+output_dir: ./results/gaia
+save_traces: true

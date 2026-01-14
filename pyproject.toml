@@ -1,0 +1,119 @@
+[project]
+name = "ai-eval-harness"
+version = "0.1.0"
+description = "Comprehensive evaluation harness for AI assistant benchmarks (GAIA, τ-bench, τ²-bench)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "AI Eval Team"}
+]
+keywords = ["ai", "evaluation", "benchmark", "llm", "agents"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    # LLM APIs
+    "openai>=1.0.0",
+    "anthropic>=0.18.0",
+
+    # Data handling
+    "datasets>=2.16.0",
+    "huggingface-hub>=0.20.0",
+    "pandas>=2.0.0",
+
+    # Configuration
+    "pyyaml>=6.0",
+    "pydantic>=2.0.0",
+
+    # CLI and display
+    "click>=8.1.0",
+    "rich>=13.0.0",
+
+    # Async and HTTP
+    "aiohttp>=3.9.0",
+    "httpx>=0.25.0",
+
+    # Utilities
+    "tenacity>=8.2.0",
+    "tqdm>=4.66.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.7.0",
+    "pre-commit>=3.5.0",
+]
+
+tools = [
+    "playwright>=1.40.0",
+    "docker>=6.1.0",
+]
+
+all = [
+    "ai-eval-harness[dev,tools]",
+]
+
+[project.scripts]
+ai-eval = "ai_eval_harness.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/example/ai-eval-harness"
+Documentation = "https://github.com/example/ai-eval-harness#readme"
+Repository = "https://github.com/example/ai-eval-harness"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ai_eval_harness*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311", "py312"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # Pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+]
+ignore = [
+    "E501",  # line too long (handled by black)
+    "B008",  # do not perform function calls in argument defaults
+]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "-v --cov=ai_eval_harness --cov-report=term-missing"

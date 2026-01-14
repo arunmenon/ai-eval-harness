@@ -1,0 +1,29 @@
+# τ-bench Benchmark Configuration
+# Tool-Agent-User dialogues with policy compliance
+
+benchmark: tau_bench
+
+agent:
+  provider: openai
+  model_name: gpt-4o
+  api_key: ${OPENAI_API_KEY}
+  temperature: 0.0
+  max_tokens: 4096
+
+benchmark_config:
+  # Domain selection
+  domain: paypal  # paypal or retail
+  subset: paypal  # alias for domain
+
+  # Conversation limits
+  max_turns: 30
+
+  # User simulator configuration
+  user_model: gpt-4o
+  user_model_provider: openai
+
+  # Evaluation
+  num_trials: 1  # Increase for Pass@k computation
+
+output_dir: ./results/tau_bench
+save_traces: true
